@@ -1,0 +1,280 @@
+$primary-color: rgba(240, 252, 63, 0.5);
+$secondary-color: #111;
+
+
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: white;
+    counter-reset: heading;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.navbar {
+    margin: 5px 10px;
+}
+
+%header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 16px;
+    border-bottom: 1px solid black;
+}
+
+%button--simple {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    color: black;
+    display: inline-block;
+}
+
+%button {
+    @extend %button--simple;
+    display: block;
+    background: $secondary-color;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    &:hover {
+        background-color: #333;
+    }
+}
+
+%button--close {
+    @extend %button--simple;   
+    & > span {
+        font-size: 30px;
+    }
+    &:hover {
+        color: red;      
+    }
+}
+
+%flex-style {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    gap: 32px;
+    padding: 32px 16px;
+}
+
+.open-menu-button {
+    cursor: pointer;
+    background-color: rgb(19, 155, 110);
+    color: white;
+    font-size: 24px;
+    padding: 8px 16px;
+    align-self: center;
+    border-radius: 50%;
+    
+    &:hover {
+        background-color: rgb(14, 117, 83);
+        transition: background-color 300ms ease-in-out;
+    }
+}
+
+input, textarea {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 500px;
+    max-width: 75%;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    transition: 300ms ease-in-out;
+    
+    &.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.menu {
+    &__header {
+        @extend %header;
+    }
+    &__list {
+        padding: 8px 16px;
+    }
+    &__item {
+        background-color: white;
+        border: none;
+        margin: 5px;
+    
+        & button {
+            @extend %button;
+            width: 100%;
+            padding: 8px 0px;
+        }
+    }
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.close-modal-button {
+    @extend %button--close;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: 300ms ease-in-out;
+    opacity: 0;
+
+    &.active {
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: all;
+        opacity: 1;
+        z-index: 0;
+    }
+}
+
+ul {
+    &.item-list, &.todo__list {
+    margin: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: 0 0 5px black;
+    overflow: auto;
+    }
+    li {
+        list-style-type: none;
+        padding: 0px 10px;
+        background: $primary-color;
+        &:not(.menu__item) {
+            border-left: 5px solid gold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        & span {
+            line-height: 35px;
+        }
+        & > .delete-item {
+            @extend %button--close;
+
+        }
+    }
+}
+
+.note {
+    z-index: 10;
+    &__form {
+        @extend %flex-style;
+        height: 90vh;
+    }
+    &__header {
+        @extend %header;
+    }
+    &__title {
+        display: block;
+    }
+    &__body {
+        min-height: 100px;
+        flex-grow: 1;
+    }
+    &__submit {
+        @extend %button;
+    }
+}
+
+.todo {
+    z-index: 10;
+    &__form {
+        @extend %flex-style;
+        height: 90vh;
+    }
+
+    &__list {
+        flex-grow: 1;
+    }
+    &__item {
+        &__add-button {
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            background-color: transparent;
+            color: black;
+            border: none;
+            line-height: 35px;
+
+            i {
+                font-size: 24px;
+                color: yellow;
+                background: $secondary-color;
+                border-radius: 50%;
+                padding: 0px 8px;
+                text-align: center;
+            }
+        }
+        
+    }
+    &__submit {
+        @extend %button;
+    }
+}
+
+.todo-item {
+    z-index: 999;
+    @extend %flex-style;
+    width: 300px;
+    &__header {
+        @extend %header;
+    }
+    &__body {
+        border: none;
+        border-bottom: 2px solid darkgreen;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__button-container {
+        display: flex;
+        justify-content: space-around;
+        &__next, &__confirm {
+            @extend %button;
+        }
+        &__cancel {
+            @extend %button--simple;
+        }
+
+    }
+}
+

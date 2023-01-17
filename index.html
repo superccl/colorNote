@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script.js" defer></script>
+    <title>ColorNote</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="brand-name">
+                <span>Color</span>Note
+            </div>
+        </nav>
+        <ul class="item-list">
+            <!-- Data parsed from local storage -->
+        </ul>
+        <button class="open-menu-button" data-open-modal=".menu">&plus;</button>
+
+        <div class="modal menu">
+            <div class="menu__header header">
+                <div class="menu__title">Add</div>
+                <button class="menu__cancel close-modal-button"><span>&times;</span></button>
+            </div>
+            <ul class="menu__list">
+                <li class="menu__item"><button class="note-button" data-open-modal=".note">Note</button></li>
+                <li class="menu__item"><button class="todo-button" data-open-modal=".todo">Todo list</button></li>
+            </ul>
+        </div>
+
+        <div class="modal note">
+            <form class="note__form">
+                <input required type="text" name="note-title" id="note-title" class="note__title" placeholder="Title">
+                <textarea required class="note__body"></textarea>
+                <button class="note__submit">Submit</button>
+                <button class="close-modal-button" id="cancel-button" type="button">Cancel</button>
+            </form>
+        </div>
+
+        <div class="modal todo">
+            <form class="todo__form">
+                <input required type="text" name="todo-title" id="todo-title" class="todo__title" placeholder="Title">
+                <ul id="todo-list" class="todo__list">
+                    <li class="todo__item todo__item--add"><button class="todo__item__add-button" id="append-top" type="button" data-first data-open-modal=".todo-item"><i>&plus;</i> Add todo item</button></li>
+                    <!-- <li class="todo__item">Todo Item</li> -->
+                    <li class="todo__item todo__item--add"><button class="todo__item__add-button" id="append-bottom" type="button" data-last data-open-modal=".todo-item"><i>&plus;</i> Add todo item</button></li>
+                </ul>
+                <button class="todo__submit">Submit</button>
+                <button class="close-modal-button" id="cancel-button" type="button">Cancel</button>
+            </form>
+        </div>
+
+        <div class="modal todo-item">
+            <div class="todo-item__title">Add</div>
+            <input required type="text" class="todo-item__body">
+            <div class="buttons todo-item__button-container">
+                <button class="todo-item__button-container__next">Next</button>
+                <button class="todo-item__button-container__confirm">Confirm</button>
+                <button class="todo-item__cancel close-modal-button">Cancel</button>
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+    </div>
+</body>
+</html>
